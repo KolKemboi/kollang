@@ -19,12 +19,13 @@ enum class TokenType {
   WHITESPACE,  // space
   END_OF_FILE, // eof
   ERROR,       // dunno this yet
-  STRING,      // str -> value
   STR_T,       // str -> value
   STR_V,       // str -> value
   EQUAL,       // =
   RBRACE,      //{
   LBRACE,      //}
+  RPAREN,      //(
+  LPAREN,      //)
   BOOL,        // bool -> type/val
   MAIN,        //  the main keyword
   TRUE,
@@ -32,11 +33,12 @@ enum class TokenType {
 };
 
 inline const std::unordered_map<std::string_view, TokenType> keywords = {
-    {"ret", TokenType::RETURN},    {"int", TokenType::INT_T},
-    {"str", TokenType::STR_T},     {"{", TokenType::LBRACE},
-    {"}", TokenType::RBRACE},      {"=", TokenType::EQUAL},
-    {"true", TokenType::TRUE},     {"false", TokenType::FALSE},
-    {"bul", TokenType::BOOL},     {"main", TokenType::MAIN},
+    {"ret", TokenType::RETURN},  {"int", TokenType::INT_T},
+    {"str", TokenType::STR_T},   {"{", TokenType::LBRACE},
+    {"}", TokenType::RBRACE},    {"=", TokenType::EQUAL},
+    {"true", TokenType::TRUE},   {"false", TokenType::FALSE},
+    {"bul", TokenType::BOOL},    {"main", TokenType::MAIN},
+    {"(", TokenType::LPAREN},    {")", TokenType::RPAREN},
     {"flt", TokenType::FLOAT_T},
 
 };
@@ -52,6 +54,95 @@ struct Token {
       : s_Type(type), s_Value(value), s_Line(line), s_Column(column) {}
 };
 
+inline void PrintTokens(std::vector<Token> &tokens) {
+  for (auto token : tokens) {
+    std::string out =
+        " Token Value => " + std::string(token.s_Value) +
+        " Token found in Line => " + std::to_string(token.s_Line) +
+        " Token found in column => " + std::to_string(token.s_Column);
+    if (token.s_Type == TokenType::IDENTIFIER) {
+      out = "IDENTIFIER " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::SEMICOLON) {
+      out = "SEMICOLON " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::RETURN) {
+      out = "RETURN " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::END_OF_FILE) {
+      out = "EOF " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::EQUAL) {
+      out = "EQUAL " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::MAIN) {
+      out = "MAIN " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::LPAREN) {
+      out = "LPAREN " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::RPAREN) {
+      out = "RPAREN " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::LBRACE) {
+      out = "LBRACE " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::RBRACE) {
+      out = "RBRACE " + out;
+      printf("%s\n", out.c_str());
+    }
+
+    if (token.s_Type == TokenType::INT_T) {
+      out = "INT_T " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::INT_V) {
+      out = "INT_V " + out;
+      printf("%s\n", out.c_str());
+    }
+
+    if (token.s_Type == TokenType::STR_T) {
+      out = "STR_T " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::STR_V) {
+      out = "STR_V " + out;
+      printf("%s\n", out.c_str());
+    }
+
+    if (token.s_Type == TokenType::FLOAT_T) {
+      out = "FLOAT_T " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::FLOAT_V) {
+      out = "FLOAT_V " + out;
+      printf("%s\n", out.c_str());
+    }
+
+    if (token.s_Type == TokenType::BOOL) {
+      out = "BOOL " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::TRUE) {
+      out = "TRUE " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::FALSE) {
+      out = "FALSE " + out;
+      printf("%s\n", out.c_str());
+    }
+  }
+}
+
 class Lexer {
 public:
   explicit Lexer(std::string_view &SourceCode) : m_SourceCode(SourceCode) {};
@@ -66,6 +157,14 @@ public:
     if (c == ';') {
       this->_advance();
       return Token(TokenType::SEMICOLON, ";", this->m_Line, this->m_Column - 1);
+    }
+    if (c == '(') {
+      this->_advance();
+      return Token(TokenType::LPAREN, "(", this->m_Line, this->m_Column - 1);
+    }
+    if (c == ')') {
+      this->_advance();
+      return Token(TokenType::RPAREN, ")", this->m_Line, this->m_Column - 1);
     }
     if (c == '{') {
       this->_advance();
@@ -156,12 +255,12 @@ private:
     if (dotCount == 1) {
       return Token(TokenType::FLOAT_V, num, m_Line, m_Column - num.length());
     }
-    return Token(TokenType::FLOAT_V, num, m_Line, m_Column - num.length());
+    return Token(TokenType::INT_V, num, m_Line, m_Column - num.length());
   }
 
   Token _getString() {
     size_t start = m_Position + 1; // move one pos
-    this->_advance(); // next
+    this->_advance();              // next
     while (_peek() != '"') {
       this->_advance();
     }
