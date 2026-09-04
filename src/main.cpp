@@ -1,4 +1,5 @@
 #include "headers/AST.hpp"
+#include "headers/AsmGen.hpp"
 #include "headers/IR.hpp"
 #include "headers/Lexer.hpp"
 #include "headers/Parser.hpp"
@@ -25,8 +26,9 @@ template <typename... Ts> S(Ts...) -> S<Ts...>;
 
 int main(int argc, char *argv[]) {
   std::string_view SourceCode =
-      "int main () { int int_name = 10; bul bool_name = "
-      "true; flt float_name = 1.009; str str_name = \"string\"; ret 1;}";
+      "int main () { int int_name = 10; int cre = 11; str name = \"Kol\"; bul bool_name = "
+      "true; flt float_name = 1.009; int age = 10; str str_name = \"string\"; "
+      "ret 1;}";
   printf("Source code \n\t %s\n", std::string(SourceCode).c_str());
   Lexer lexer = Lexer(SourceCode);
   std::vector<Token> tokens = lexer.tokenize();
@@ -90,6 +92,10 @@ int main(int argc, char *argv[]) {
   std::vector<IRInst> instructions = irGen.generate(prog);
 
   for (IRInst &instr : instructions) {
-    printf("%s(%s)\n", instr.s_Operand.c_str(), instr.s_Operation.c_str());
+    printf("%s => %s(%s)\n", instr.s_Type.c_str(), instr.s_Operand.c_str(),
+           instr.s_Operation.c_str());
   }
+  printf("============ASM GENERATION==================\n");
+  AsmGen asmGenerator = AsmGen(instructions);
+  asmGenerator.generateASM();
 }

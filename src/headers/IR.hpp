@@ -7,6 +7,7 @@
 #include <vector>
 
 struct IRInst {
+  std::string s_Type;
   std::string s_Operation;
   std::string s_Operand;
 
@@ -35,18 +36,22 @@ public:
               [&](VariableDeclaration &varDec) {
                 std::visit(U{
                                [&](IntegerLiteral &iL) {
+                                 inst.s_Type = "INT_DECL";
                                  inst.s_Operand = varDec.s_Name;
                                  inst.s_Operation = std::to_string(iL.s_Value);
                                },
                                [&](FloatLiteral &fL) {
+                                 inst.s_Type = "FLT_DECL";
                                  inst.s_Operand = varDec.s_Name;
                                  inst.s_Operation = std::to_string(fL.s_Value);
                                },
                                [&](StringLiteral &sL) {
+                                 inst.s_Type = "STR_DECL";
                                  inst.s_Operand = varDec.s_Name;
                                  inst.s_Operation = sL.s_Value;
                                },
                                [&](BooleanLiteral &bL) {
+                                 inst.s_Type = "BUL_DECL";
                                  inst.s_Operand = varDec.s_Name;
                                  inst.s_Operation = std::to_string(bL.s_Value);
                                },
@@ -54,6 +59,7 @@ public:
                            varDec.s_Initializer);
               },
               [&](ReturnStatement &retStmt) {
+                inst.s_Type = "RET";
                 inst.s_Operand = "RET";
                 std::visit(U{
                                [&](IntegerLiteral &iL) {
