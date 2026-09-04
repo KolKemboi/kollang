@@ -12,7 +12,7 @@ fi
 cd build
 cmake ..
 make -j4
-./kompiler
+./kompiler main.kol
 
 echo "................KOL LANG ....................."
 # the assembly part next

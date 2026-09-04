@@ -37,6 +37,7 @@ public:
 
     for (IRInst &inst : Decs) {
       if (inst.s_Type == "STR_DECL") {
+
         std::string sect = "\t" + inst.s_Operand + " db '" + inst.s_Operation +
                            "', 0xA\n\t" + inst.s_Operand + "_len equ $ - " +
                            inst.s_Operand + "\n";
@@ -46,39 +47,38 @@ public:
         data_section += sect;
       }
       if (inst.s_Type == "INT_DECL") {
-        std::string sect =
-            "\t" + inst.s_Operand + " db '" + inst.s_Operation + "'\n";
+        std::string sect = "\t" + inst.s_Operand + " db '" + inst.s_Operation +
+                           "', 0xA\n\t" + inst.s_Operand + "_len equ $ - " +
+                           inst.s_Operand + "\n";
         std::string sect_m =
-            "\tput " + inst.s_Operand + ", 2\n"; // auto mactic print
+            "\tput " + inst.s_Operand + ", " + inst.s_Operand + "_len\n";
         main_section += sect_m;
-
         data_section += sect;
       }
       if (inst.s_Type == "BUL_DECL") {
-        std::string sect =
-            "\t" + inst.s_Operand + " db '" + inst.s_Operation + "'\n";
-
+        std::string sect = "\t" + inst.s_Operand + " db '" + inst.s_Operation +
+                           "', 0xA\n\t" + inst.s_Operand + "_len equ $ - " +
+                           inst.s_Operand + "\n";
         std::string sect_m =
-            "\tput " + inst.s_Operand + ", " + "1\n"; // auto mactic print
-                                                      //
+            "\tput " + inst.s_Operand + ", " + inst.s_Operand + "_len\n";
         main_section += sect_m;
         data_section += sect;
       }
       if (inst.s_Type == "FLT_DECL") {
-        std::string sect =
-            "\t" + inst.s_Operand + " db '" + inst.s_Operation + "'\n";
-
+        std::string sect = "\t" + inst.s_Operand + " db '" + inst.s_Operation +
+                           "', 0xA\n\t" + inst.s_Operand + "_len equ $ - " +
+                           inst.s_Operand + "\n";
         std::string sect_m =
-            "\tput " + inst.s_Operand + ", 2\n"; // auto mactic print
+            "\tput " + inst.s_Operand + ", " + inst.s_Operand + "_len\n";
         main_section += sect_m;
-
         data_section += sect;
       }
     }
 
     for (IRInst &inst : Rets) {
       if (inst.s_Type == "RET") {
-        std::string sect = "\tmov eax, " + inst.s_Operation + "\n\tint 0x80\n\n";
+        std::string sect =
+            "\tmov eax, " + inst.s_Operation + "\n\tint 0x80\n\n";
         exit_section += sect;
       }
     }

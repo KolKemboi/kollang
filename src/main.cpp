@@ -4,6 +4,9 @@
 #include "headers/Lexer.hpp"
 #include "headers/Parser.hpp"
 #include <cstdio>
+#include <cstdlib>
+#include <fstream>
+#include <sstream>
 #include <string>
 #include <variant>
 #include <vector>
@@ -25,11 +28,27 @@ template <typename... Ts> struct S : Ts... {
 template <typename... Ts> S(Ts...) -> S<Ts...>;
 
 int main(int argc, char *argv[]) {
-  std::string_view SourceCode =
-      "int main () { int int_name = 10; int cre = 11; str name = \"Kol\"; bul bool_name = "
-      "true; flt float_name = 1.009; int age = 10; str str_name = \"string\"; "
-      "ret 1;}";
-  printf("Source code \n\t %s\n", std::string(SourceCode).c_str());
+
+  std::ifstream fileData;
+  std::string Code;
+
+  fileData.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+
+  try {
+    fileData.open(argv[1]);
+    std::stringstream codeStream;
+    codeStream << fileData.rdbuf();
+    fileData.close();
+
+    Code = codeStream.str();
+  } catch (std::ifstream::failure e) {
+    printf("%s\n", e.what());
+    std::exit(1);
+  }
+
+  std::string_view SourceCode = Code;
+
+  printf("Source code\n%s", std::string(SourceCode).c_str());
   Lexer lexer = Lexer(SourceCode);
   std::vector<Token> tokens = lexer.tokenize();
 
