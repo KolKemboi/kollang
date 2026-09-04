@@ -8,7 +8,6 @@
 #include <variant>
 #include <vector>
 
-
 class Parser {
 public:
   explicit Parser(const std::vector<Token> &tokens) : m_Tokens(tokens) {}

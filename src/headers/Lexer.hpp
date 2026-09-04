@@ -54,94 +54,6 @@ struct Token {
       : s_Type(type), s_Value(value), s_Line(line), s_Column(column) {}
 };
 
-inline void PrintTokens(std::vector<Token> &tokens) {
-  for (auto token : tokens) {
-    std::string out =
-        " Token Value => " + std::string(token.s_Value) +
-        " Token found in Line => " + std::to_string(token.s_Line) +
-        " Token found in column => " + std::to_string(token.s_Column);
-    if (token.s_Type == TokenType::IDENTIFIER) {
-      out = "IDENTIFIER " + out;
-      printf("%s\n", out.c_str());
-    }
-    if (token.s_Type == TokenType::SEMICOLON) {
-      out = "SEMICOLON " + out;
-      printf("%s\n", out.c_str());
-    }
-    if (token.s_Type == TokenType::RETURN) {
-      out = "RETURN " + out;
-      printf("%s\n", out.c_str());
-    }
-    if (token.s_Type == TokenType::END_OF_FILE) {
-      out = "EOF " + out;
-      printf("%s\n", out.c_str());
-    }
-    if (token.s_Type == TokenType::EQUAL) {
-      out = "EQUAL " + out;
-      printf("%s\n", out.c_str());
-    }
-    if (token.s_Type == TokenType::MAIN) {
-      out = "MAIN " + out;
-      printf("%s\n", out.c_str());
-    }
-    if (token.s_Type == TokenType::LPAREN) {
-      out = "LPAREN " + out;
-      printf("%s\n", out.c_str());
-    }
-    if (token.s_Type == TokenType::RPAREN) {
-      out = "RPAREN " + out;
-      printf("%s\n", out.c_str());
-    }
-    if (token.s_Type == TokenType::LBRACE) {
-      out = "LBRACE " + out;
-      printf("%s\n", out.c_str());
-    }
-    if (token.s_Type == TokenType::RBRACE) {
-      out = "RBRACE " + out;
-      printf("%s\n", out.c_str());
-    }
-
-    if (token.s_Type == TokenType::INT_T) {
-      out = "INT_T " + out;
-      printf("%s\n", out.c_str());
-    }
-    if (token.s_Type == TokenType::INT_V) {
-      out = "INT_V " + out;
-      printf("%s\n", out.c_str());
-    }
-
-    if (token.s_Type == TokenType::STR_T) {
-      out = "STR_T " + out;
-      printf("%s\n", out.c_str());
-    }
-    if (token.s_Type == TokenType::STR_V) {
-      out = "STR_V " + out;
-      printf("%s\n", out.c_str());
-    }
-
-    if (token.s_Type == TokenType::FLOAT_T) {
-      out = "FLOAT_T " + out;
-      printf("%s\n", out.c_str());
-    }
-    if (token.s_Type == TokenType::FLOAT_V) {
-      out = "FLOAT_V " + out;
-      printf("%s\n", out.c_str());
-    }
-
-    if (token.s_Type == TokenType::BOOL) {
-      out = "BOOL " + out;
-      printf("%s\n", out.c_str());
-    }
-    if (token.s_Type == TokenType::TRUE) {
-      out = "TRUE " + out;
-      printf("%s\n", out.c_str());
-    }
-    if (token.s_Type == TokenType::FALSE) {
-      out = "FALSE " + out;
-      printf("%s\n", out.c_str());
-    }
-  }
-}
 
 class Lexer {
 public:
@@ -289,3 +201,92 @@ private:
     return Token(TokenType::IDENTIFIER, word, m_Line, m_Column - word.length());
   }
 };
+
+inline void PrintTokens(std::vector<Token> &tokens) {
+  for (auto token : tokens) {
+    std::string out =
+        " Token Value => " + std::string(token.s_Value) +
+        " Token found in Line => " + std::to_string(token.s_Line) +
+        " Token found in column => " + std::to_string(token.s_Column);
+    if (token.s_Type == TokenType::IDENTIFIER) {
+      out = "IDENTIFIER " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::SEMICOLON) {
+      out = "SEMICOLON " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::RETURN) {
+      out = "RETURN " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::END_OF_FILE) {
+      out = "EOF " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::EQUAL) {
+      out = "EQUAL " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::MAIN) {
+      out = "MAIN " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::LPAREN) {
+      out = "LPAREN " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::RPAREN) {
+      out = "RPAREN " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::LBRACE) {
+      out = "LBRACE " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::RBRACE) {
+      out = "RBRACE " + out;
+      printf("%s\n", out.c_str());
+    }
+
+    if (token.s_Type == TokenType::INT_T) {
+      out = "INT_T " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::INT_V) {
+      out = "INT_V " + out;
+      printf("%s\n", out.c_str());
+    }
+
+    if (token.s_Type == TokenType::STR_T) {
+      out = "STR_T " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::STR_V) {
+      out = "STR_V " + out;
+      printf("%s\n", out.c_str());
+    }
+
+    if (token.s_Type == TokenType::FLOAT_T) {
+      out = "FLOAT_T " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::FLOAT_V) {
+      out = "FLOAT_V " + out;
+      printf("%s\n", out.c_str());
+    }
+
+    if (token.s_Type == TokenType::BOOL) {
+      out = "BOOL " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::TRUE) {
+      out = "TRUE " + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::FALSE) {
+      out = "FALSE " + out;
+      printf("%s\n", out.c_str());
+    }
+  }
+}
