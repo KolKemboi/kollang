@@ -54,7 +54,6 @@ struct Token {
       : s_Type(type), s_Value(value), s_Line(line), s_Column(column) {}
 };
 
-
 class Lexer {
 public:
   explicit Lexer(std::string_view &SourceCode) : m_SourceCode(SourceCode) {};
