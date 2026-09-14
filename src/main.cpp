@@ -12,13 +12,23 @@
 #include <vector>
 
 /////LANGUAGE STRUCTURE
-/*
- * int main () {
- * int int_name = 0;
- * bool bool_name = true;
- * str str_name = "string";
- * return 1;
- * }
+/*!
+ * @mainpage KolLang is a c-style language,
+ * The extension of KolLang is a .kol file,
+ * in this project, a main.kol has been provided
+ * as shown below
+ *
+ *  int main () {\n
+ *  int int_name = 0;\n
+ *  bul bool_name = true;\n
+ *  str str_name = "string";\n
+ *  return 1;\n
+ *  }
+ *
+ *  the flow goes as
+ *
+ *  main.kol -> Lexer -> Parser -> (IRGenerator)Intermediate Representation ->
+ * (AsmGen)Assembly Code Generation
  *
  */
 
@@ -27,6 +37,12 @@ template <typename... Ts> struct S : Ts... {
 };
 template <typename... Ts> S(Ts...) -> S<Ts...>;
 
+/**
+ * @mainpage
+ *
+ * the main function accepts the file and produces an i386 assembly
+ *
+ */
 int main(int argc, char *argv[]) {
 
   std::ifstream fileData;
@@ -49,6 +65,10 @@ int main(int argc, char *argv[]) {
   std::string_view SourceCode = Code;
 
   printf("Source code\n%s", std::string(SourceCode).c_str());
+  /*!
+   * @mainpage Lexer init
+   *
+   */
   Lexer lexer = Lexer(SourceCode);
   std::vector<Token> tokens = lexer.tokenize();
 

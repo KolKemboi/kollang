@@ -98,6 +98,8 @@ public:
     file << exit_section;
     printf("%s\n", data_section.c_str());
     file << data_section;
+
+		file.close();
   }
 
 private:

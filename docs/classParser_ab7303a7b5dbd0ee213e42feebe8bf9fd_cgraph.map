@@ -1,0 +1,17 @@
+<map id="Parser::_parseVariableDeclaration" name="Parser::_parseVariableDeclaration">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,56,247,81"/>
+<area shape="rect" id="Node000002" href="$classParser.html#a1163a90c54eded68ab3655a0c17c764e" title=" " alt="" coords="527,56,659,81"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="247,66,513,66,513,71,247,71"/>
+<area shape="rect" id="Node000003" href="$classParser.html#a7fba5e6822f411573da307b83c3ac2e1" title=" " alt="" coords="295,5,479,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="192,53,307,31,308,36,193,58"/>
+<area shape="rect" id="Node000005" href="$classParser.html#ae3d319cebcfb48d44c488a9a1882db32" title=" " alt="" coords="329,107,444,132"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="193,79,316,103,315,108,192,84"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="440,28,528,50,527,55,439,33"/>
+<area shape="rect" id="Node000004" href="$classParser.html#a9bc2368228f7f4a5628dcf5603f4a183" title=" " alt="" coords="707,105,816,131"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="479,13,568,20,615,29,660,42,703,66,738,94,735,98,700,70,658,47,613,34,567,25,479,18"/>
+<area shape="poly" id="edge6_Node000005_Node000002" title=" " alt="" coords="439,104,527,82,528,87,440,109"/>
+<area shape="poly" id="edge9_Node000005_Node000004" title=" " alt="" coords="444,129,527,141,593,145,658,141,706,131,707,137,659,146,593,151,526,146,444,134"/>
+<area shape="rect" id="Node000006" href="$classParser.html#af4dc035bf8fc8e25089638428e8b9bf6" title=" " alt="" coords="535,105,650,131"/>
+<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="444,116,521,116,521,121,444,122"/>
+<area shape="poly" id="edge8_Node000006_Node000004" title=" " alt="" coords="650,115,693,115,693,121,650,121"/>
+</map>
