@@ -1,6 +1,4 @@
 #include "headers/AST.hpp"
-#include "headers/AsmGen.hpp"
-#include "headers/IR.hpp"
 #include "headers/Lexer.hpp"
 #include "headers/Parser.hpp"
 #include <cstdio>
@@ -11,38 +9,11 @@
 #include <variant>
 #include <vector>
 
-/////LANGUAGE STRUCTURE
-/*!
- * @mainpage KolLang is a c-style language,
- * The extension of KolLang is a .kol file,
- * in this project, a main.kol has been provided
- * as shown below
- *
- *  int main () {\n
- *  int int_name = 0;\n
- *  bul bool_name = true;\n
- *  str str_name = "string";\n
- *  return 1;\n
- *  }
- *
- *  the flow goes as
- *
- *  main.kol -> Lexer -> Parser -> (IRGenerator)Intermediate Representation ->
- * (AsmGen)Assembly Code Generation
- *
- */
-
 template <typename... Ts> struct S : Ts... {
   using Ts::operator()...;
 };
 template <typename... Ts> S(Ts...) -> S<Ts...>;
 
-/**
- * @mainpage
- *
- * the main function accepts the file and produces an i386 assembly
- *
- */
 int main(int argc, char *argv[]) {
 
   std::ifstream fileData;
@@ -65,10 +36,7 @@ int main(int argc, char *argv[]) {
   std::string_view SourceCode = Code;
 
   printf("Source code\n%s", std::string(SourceCode).c_str());
-  /*!
-   * @mainpage Lexer init
-   *
-   */
+
   Lexer lexer = Lexer(SourceCode);
   std::vector<Token> tokens = lexer.tokenize();
 
@@ -125,16 +93,4 @@ int main(int argc, char *argv[]) {
         },
         stmt);
   }
-  printf("============IR GENERATION==================\n");
-
-  IRGenerator irGen;
-  std::vector<IRInst> instructions = irGen.generate(prog);
-
-  for (IRInst &instr : instructions) {
-    printf("%s => %s(%s)\n", instr.s_Type.c_str(), instr.s_Operand.c_str(),
-           instr.s_Operation.c_str());
-  }
-  printf("============ASM GENERATION==================\n");
-  AsmGen asmGenerator = AsmGen(instructions);
-  asmGenerator.generateASM();
 }
