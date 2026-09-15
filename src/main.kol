@@ -1,0 +1,7 @@
+int main() {
+  int integer = 100;
+  bul boolean = true;
+	str name = "kollang";
+	flt version = 0.1;
+  ret integer;
+}
