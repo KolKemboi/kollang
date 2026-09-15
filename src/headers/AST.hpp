@@ -21,8 +21,12 @@ struct BooleanLiteral {
   bool s_Value;
 };
 
-using Expression =
-    std::variant<IntegerLiteral, FloatLiteral, StringLiteral, BooleanLiteral>;
+struct VariableExpression {
+  std::string s_Name;
+};
+
+using Expression = std::variant<IntegerLiteral, FloatLiteral, StringLiteral,
+                                BooleanLiteral, VariableExpression>;
 
 // STATEMENTS
 

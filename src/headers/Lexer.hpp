@@ -149,35 +149,47 @@ private:
 
   Token _readNumber() {
     size_t start = this->m_Position;
+    bool isFloat = false;
 
-    unsigned int dotCount = 0;
+    // unsigned int dotCount = 0;
 
     // for floats, I can add an extra check for a period(.)
     while (std::isdigit(_peek())) {
       this->_advance();
-      if (_peek() == '.') {
-        dotCount += 1;
+    }
+    if (_peek() == '.') {
+      isFloat = true;
+      _advance();
+      while (std::isdigit(_peek())) {
         _advance();
       }
-      // raise an error if next is a non numerical
     }
     std::string_view num = m_SourceCode.substr(start, m_Position - start);
-    // check if there is a alpha inside num, if, exit and raise
-    if (dotCount == 1) {
-      return Token(TokenType::FLOAT_V, num, m_Line, m_Column - num.length());
+
+    if (isFloat) {
+      return Token(TokenType::FLOAT_V, num, m_Line, m_Column - num.length()
+
+      );
     }
     return Token(TokenType::INT_V, num, m_Line, m_Column - num.length());
   }
 
   Token _getString() {
     size_t start = m_Position + 1; // move one pos
-    this->_advance();              // next
-    while (_peek() != '"') {
-      this->_advance();
-    }
-    std::string_view word =
-        this->m_SourceCode.substr(start, m_Position - start);
     _advance();
+
+    while (_peek() != '"' && _peek() != '\0') {
+      _advance();
+    }
+
+    if (_peek() == '\0') {
+      return Token(TokenType::ERROR, "unterminated string", m_Line, m_Column);
+    }
+
+    std::string_view word = m_SourceCode.substr(start, m_Position - start);
+
+    _advance();
+
     return Token(TokenType::STR_V, word, m_Line, m_Column - word.length());
   }
 

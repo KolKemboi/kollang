@@ -1,9 +1,7 @@
 int main() {
   int integer = 100;
-  str foo = "/foo";
-  str bar = "/bar";
   bul boolean = true;
-  flt floating = 1.09;
-
-  ret 1;
+	str name = "kollang";
+	flt version = 0.1;
+  ret integer;
 }

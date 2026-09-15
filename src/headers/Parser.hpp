@@ -107,6 +107,11 @@ private:
       _advance();
       return BooleanLiteral{false};
     }
+    case TokenType::IDENTIFIER: {
+      _advance();
+      return VariableExpression{std::string(token.s_Value)};
+    }
+
     default:
       throw std::runtime_error("Expected expression at line" +
                                std::to_string(token.s_Line));
