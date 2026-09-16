@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Project</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 40px;
+        }
+
+        /* =========================
+           SIDE PROJECT BAR
+        ========================= */
+
+        .project-nav {
+            position: fixed;
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+
+            width: 190px;
+
+            background: white;
+            padding: 15px;
+
+            border-radius: 15px;
+
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+
+            z-index: 1000;
+        }
+
+        .project-nav h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .project-nav a {
+            display: block;
+
+            text-decoration: none;
+            color: #444;
+
+            padding: 12px 15px;
+            margin-bottom: 8px;
+
+            border-radius: 8px;
+
+            transition: all 0.3s ease;
+        }
+
+        .project-nav a:hover {
+            background-color: #3498db;
+            color: white;
+
+            padding-left: 20px;
+        }
+
+
+        /* =========================
+           MAIN CONTENT
+        ========================= */
+
+				.container {
+						width: calc(100% - 280px);
+						max-width: none;
+
+						margin-left: 250px;
+						margin-right: 30px;
+				}
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 36px;
+        }
+
+
+        /* =========================
+           PROJECT CARDS
+        ========================= */
+
+        .image-card {
+            background-color: white;
+
+            margin-bottom: 40px;
+
+            border-radius: 12px;
+
+            overflow: hidden;
+
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+            /* Keeps the title from hiding underneath anything */
+            scroll-margin-top: 40px;
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 450px;
+
+            object-fit: cover;
+
+            display: block;
+        }
+
+        .image-content {
+            padding: 25px;
+        }
+
+        .image-content h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .image-content p {
+            font-size: 17px;
+            line-height: 1.7;
+            color: #666;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            body {
+                padding: 20px;
+            }
+
+            /* Turn sidebar into a horizontal bar */
+            .project-nav {
+                position: sticky;
+
+                top: 15px;
+                left: auto;
+                transform: none;
+
+                width: 100%;
+
+                margin-bottom: 30px;
+
+                display: flex;
+
+                overflow-x: auto;
+
+                gap: 8px;
+            }
+
+            .project-nav h3 {
+                display: none;
+            }
+
+            .project-nav a {
+                white-space: nowrap;
+                margin-bottom: 0;
+            }
+
+            .container {
+                margin: auto;
+            }
+
+            .image-card img {
+                height: 280px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .image-content h2 {
+                font-size: 23px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <!-- =========================
+         SIDE NAVIGATION
+    ========================== -->
+
+    <nav class="project-nav">
+
+        <h3>My Projects</h3>
+
+        <a href="#project1">
+            Project One
+        </a>
+
+        <a href="#project2">
+            Project Two
+        </a>
+
+        <a href="#project3">
+            Project Three
+        </a>
+
+        <a href="#project4">
+            Project Four
+        </a>
+
+    </nav>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <div class="container">
+
+        <h1>My Project Gallery</h1>
+
+
+        <!-- PROJECT 1 -->
+
+        <div class="image-card" id="project1">
+
+            <img src="./images/image1.png" alt="Project Image 1">
+
+            <div class="image-content">
+
+                <h2>Project One</h2>
+
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Praesent vitae justo nec lorem tincidunt consequat.
+                    Suspendisse potenti. Integer malesuada, neque at
+                    consectetur tincidunt, libero lorem feugiat massa,
+                    vitae consequat ipsum nulla at erat.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROJECT 2 -->
+
+        <div class="image-card" id="project2">
+
+            <img src="./images/image2.jpg" alt="Project Image 2">
+
+            <div class="image-content">
+
+                <h2>Project Two</h2>
+
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Donec feugiat, sapien sed faucibus tincidunt, mauris
+                    lectus consectetur libero, vitae tincidunt justo neque
+                    eget augue. Morbi vitae lectus sed libero consequat
+                    pellentesque.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROJECT 3 -->
+
+        <div class="image-card" id="project3">
+
+            <img src="./images/image3.jpg" alt="Project Image 3">
+
+            <div class="image-content">
+
+                <h2>Project Three</h2>
+
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Vestibulum ante ipsum primis in faucibus orci luctus et
+                    ultrices posuere cubilia curae. Nam vitae neque vel
+                    lectus aliquet faucibus. Phasellus vitae mauris sed
+                    libero tincidunt vulputate.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROJECT 4 -->
+
+        <div class="image-card" id="project4">
+
+            <img src="./images/image4.jpg" alt="Project Image 4">
+
+            <div class="image-content">
+
+                <h2>Project Four</h2>
+
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Mauris vitae lorem vel augue posuere consequat.
+                    Pellentesque habitant morbi tristique senectus et netus
+                    et malesuada fames ac turpis egestas.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
