@@ -37,18 +37,19 @@ int main(int argc, char *argv[]) {
 
   std::string_view SourceCode = Code;
 
-  printf("Source code\n%s", std::string(SourceCode).c_str());
+  printf("\n\n============= SOURCE CODE ============= \n\n%s",
+         std::string(SourceCode).c_str());
 
   Lexer lexer = Lexer(SourceCode);
   std::vector<Token> tokens = lexer.tokenize();
 
-  PrintTokens(tokens);
+  // PrintTokens(tokens);
 
   Parser parser = Parser(tokens);
   Program prog = parser.parse();
 
-
   CodeGen codegen;
   codegen.generate(prog);
+  printf("\n\n============= LLVM IR ============= \n\n");
   codegen.dump();
 }
