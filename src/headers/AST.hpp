@@ -40,6 +40,10 @@ struct ReturnStatement {
   Expression s_Expression;
 };
 
+struct ConditionalStatement {};
+
+struct ForLoop {};
+
 using Statement = std::variant<VariableDeclaration, ReturnStatement>;
 
 // Program

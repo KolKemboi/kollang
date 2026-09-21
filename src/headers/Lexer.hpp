@@ -30,16 +30,27 @@ enum class TokenType {
   MAIN,        //  the main keyword
   TRUE,
   FALSE,
+  IF,
+  ELSE,
+  FOR,
+  SWITCH,
+  CASE,
+  COLON,
+  DEFAULT,
+
 };
 
 inline const std::unordered_map<std::string_view, TokenType> keywords = {
-    {"ret", TokenType::RETURN},  {"int", TokenType::INT_T},
-    {"str", TokenType::STR_T},   {"{", TokenType::LBRACE},
-    {"}", TokenType::RBRACE},    {"=", TokenType::EQUAL},
-    {"true", TokenType::TRUE},   {"false", TokenType::FALSE},
-    {"bul", TokenType::BOOL},    {"main", TokenType::MAIN},
-    {"(", TokenType::LPAREN},    {")", TokenType::RPAREN},
-    {"flt", TokenType::FLOAT_T},
+    {"ret", TokenType::RETURN},    {"int", TokenType::INT_T},
+    {"str", TokenType::STR_T},     {"{", TokenType::LBRACE},
+    {"}", TokenType::RBRACE},      {"=", TokenType::EQUAL},
+    {"true", TokenType::TRUE},     {"false", TokenType::FALSE},
+    {"bul", TokenType::BOOL},      {"main", TokenType::MAIN},
+    {"(", TokenType::LPAREN},      {")", TokenType::RPAREN},
+    {"flt", TokenType::FLOAT_T},   {"for", TokenType::FOR},
+    {"if", TokenType::IF},         {"else", TokenType::ELSE},
+    {"switch", TokenType::SWITCH}, {"case", TokenType::CASE},
+    {"default", TokenType::CASE},
 
 };
 
@@ -176,19 +187,20 @@ private:
 
   Token _getString() {
     size_t start = m_Position + 1; // move one pos
-    _advance();
+    _advance();                    // actually move
 
     while (_peek() != '"' && _peek() != '\0') {
-      _advance();
+      _advance(); // grab while not endl or "
     }
 
+    // look for terminations
     if (_peek() == '\0') {
       return Token(TokenType::ERROR, "unterminated string", m_Line, m_Column);
     }
 
     std::string_view word = m_SourceCode.substr(start, m_Position - start);
 
-    _advance();
+    _advance(); // skip "
 
     return Token(TokenType::STR_V, word, m_Line, m_Column - word.length());
   }
@@ -223,6 +235,27 @@ inline void PrintTokens(std::vector<Token> &tokens) {
       out = "IDENTIFIER " + out;
       printf("%s\n", out.c_str());
     }
+    if (token.s_Type == TokenType::FOR) {
+      out = "FOR" + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::IF) {
+      out = "IF" + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::ELSE) {
+      out = "ELSE" + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::CASE) {
+      out = "CASE" + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::SWITCH) {
+      out = "SWITCH" + out;
+      printf("%s\n", out.c_str());
+    }
+
     if (token.s_Type == TokenType::SEMICOLON) {
       out = "SEMICOLON " + out;
       printf("%s\n", out.c_str());
