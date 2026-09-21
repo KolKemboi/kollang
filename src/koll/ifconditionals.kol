@@ -1,0 +1,10 @@
+int main(){
+	bul condition = true;
+	if (condition){
+
+	} else {
+
+	}
+
+
+}

@@ -12,7 +12,7 @@ fi
 cd build
 cmake ..
 make -j4
-./kompiler main.kol
+./kompiler koll/ifconditionals.kol
 
 # echo "................KOL LANG ....................."
 # # the assembly part next

@@ -48,5 +48,10 @@ file(COPY
     DESTINATION ${CMAKE_BINARY_DIR}
 )
 
+file(COPY
+    ${CMAKE_SOURCE_DIR}/src/koll
+    DESTINATION ${CMAKE_BINARY_DIR}
+)
+
 
 include_directories(${CMAKE_SOURCE_DIR}/src/headers)

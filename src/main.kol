@@ -5,7 +5,7 @@
 		str name = "kollang";
 		flt version = 0.1;
 
-		for (; ;){
+		for (int i = 10; i < 10 ; i = i + 1){
 
 		};
 

@@ -37,6 +37,15 @@ enum class TokenType {
   CASE,
   COLON,
   DEFAULT,
+  LESSTHAN,
+  GREATTHAN,
+  GREATEQ,
+  LESSEQ,
+  ADD,
+  SUB,
+  DIV,
+  MUL,
+  MODULO,
 
 };
 
@@ -50,7 +59,12 @@ inline const std::unordered_map<std::string_view, TokenType> keywords = {
     {"flt", TokenType::FLOAT_T},   {"for", TokenType::FOR},
     {"if", TokenType::IF},         {"else", TokenType::ELSE},
     {"switch", TokenType::SWITCH}, {"case", TokenType::CASE},
-    {"default", TokenType::CASE},
+    {"default", TokenType::CASE},  {"<", TokenType::LESSTHAN},
+    {">", TokenType::GREATTHAN},   {"<=", TokenType::LESSEQ},
+    {">=", TokenType::GREATEQ},    {"+", TokenType::ADD},
+    {"-", TokenType::SUB},         {"/", TokenType::DIV},
+    {"*", TokenType::MUL},         {"%", TokenType::MODULO},
+    {":", TokenType::COLON},
 
 };
 
@@ -80,6 +94,11 @@ public:
       this->_advance();
       return Token(TokenType::SEMICOLON, ";", this->m_Line, this->m_Column - 1);
     }
+    if (c == ':') {
+      this->_advance();
+      return Token(TokenType::COLON, ":", this->m_Line, this->m_Column - 1);
+    }
+    // Enclosures
     if (c == '(') {
       this->_advance();
       return Token(TokenType::LPAREN, "(", this->m_Line, this->m_Column - 1);
@@ -96,17 +115,41 @@ public:
       this->_advance();
       return Token(TokenType::RBRACE, "}", this->m_Line, this->m_Column - 1);
     }
+
+    // comparators
+    if (c == '<') {
+      this->_advance();
+      // if not = ret LESSEQ
+      if (_peek() == '=') {
+        return Token(TokenType::LESSEQ, ">=", this->m_Line, this->m_Column - 1);
+        _advance();
+      }
+      return Token(TokenType::LESSTHAN, "<", this->m_Line, this->m_Column - 1);
+    }
+    if (c == '>') {
+      this->_advance();
+      // if not = ret GEATEQ
+      if (_peek() == '=') {
+        return Token(TokenType::GREATEQ, ">=", this->m_Line,
+                     this->m_Column - 1);
+        _advance();
+      }
+      return Token(TokenType::GREATTHAN, ">", this->m_Line, this->m_Column - 1);
+    }
     if (c == '=') {
       this->_advance();
       return Token(TokenType::EQUAL, "=", this->m_Line, this->m_Column - 1);
     }
+
     // if " read until "
     if (c == '"') {
       return this->_getString();
     }
+
     if (std::isdigit(c)) {
       return this->_readNumber();
     }
+
     if (std::isalpha(c) || c == '_') {
       return this->_readWord();
     }
@@ -239,6 +282,29 @@ inline void PrintTokens(std::vector<Token> &tokens) {
       out = "FOR" + out;
       printf("%s\n", out.c_str());
     }
+    // BINARY ADD, MULL, SUB, DIV, MOUDULO
+    if (token.s_Type == TokenType::ADD) {
+      out = "BINARY OP ADD" + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::MUL) {
+      out = "BINARY OP MUL" + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::SUB) {
+      out = "BINARY OP SUB" + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::DIV) {
+      out = "BINARY OP DIV" + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::MODULO) {
+      out = "BINARY OP MODULO" + out;
+      printf("%s\n", out.c_str());
+    }
+
+    // CONDITIONALS -> if else, case switch
     if (token.s_Type == TokenType::IF) {
       out = "IF" + out;
       printf("%s\n", out.c_str());
@@ -256,26 +322,49 @@ inline void PrintTokens(std::vector<Token> &tokens) {
       printf("%s\n", out.c_str());
     }
 
+    // semi colon and colon
     if (token.s_Type == TokenType::SEMICOLON) {
       out = "SEMICOLON " + out;
       printf("%s\n", out.c_str());
     }
+    // ret
     if (token.s_Type == TokenType::RETURN) {
       out = "RETURN " + out;
       printf("%s\n", out.c_str());
     }
+    // eof
     if (token.s_Type == TokenType::END_OF_FILE) {
       out = "EOF " + out;
       printf("%s\n", out.c_str());
     }
+    // =
     if (token.s_Type == TokenType::EQUAL) {
       out = "EQUAL " + out;
       printf("%s\n", out.c_str());
     }
+    // compares < > <= >=
+    if (token.s_Type == TokenType::LESSEQ) {
+      out = "LESS EQUAL" + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::LESSTHAN) {
+      out = "LESS THAN" + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::GREATEQ) {
+      out = "GREATER EQUAL" + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::GREATTHAN) {
+      out = "GREAT THAN" + out;
+      printf("%s\n", out.c_str());
+    }
+    // main entry
     if (token.s_Type == TokenType::MAIN) {
       out = "MAIN " + out;
       printf("%s\n", out.c_str());
     }
+    // enclosures ( ) { }
     if (token.s_Type == TokenType::LPAREN) {
       out = "LPAREN " + out;
       printf("%s\n", out.c_str());
@@ -292,7 +381,7 @@ inline void PrintTokens(std::vector<Token> &tokens) {
       out = "RBRACE " + out;
       printf("%s\n", out.c_str());
     }
-
+    // vars
     if (token.s_Type == TokenType::INT_T) {
       out = "INT_T " + out;
       printf("%s\n", out.c_str());
@@ -301,7 +390,6 @@ inline void PrintTokens(std::vector<Token> &tokens) {
       out = "INT_V " + out;
       printf("%s\n", out.c_str());
     }
-
     if (token.s_Type == TokenType::STR_T) {
       out = "STR_T " + out;
       printf("%s\n", out.c_str());
@@ -310,7 +398,6 @@ inline void PrintTokens(std::vector<Token> &tokens) {
       out = "STR_V " + out;
       printf("%s\n", out.c_str());
     }
-
     if (token.s_Type == TokenType::FLOAT_T) {
       out = "FLOAT_T " + out;
       printf("%s\n", out.c_str());
@@ -319,11 +406,11 @@ inline void PrintTokens(std::vector<Token> &tokens) {
       out = "FLOAT_V " + out;
       printf("%s\n", out.c_str());
     }
-
     if (token.s_Type == TokenType::BOOL) {
       out = "BOOL " + out;
       printf("%s\n", out.c_str());
     }
+    // booleans
     if (token.s_Type == TokenType::TRUE) {
       out = "TRUE " + out;
       printf("%s\n", out.c_str());
