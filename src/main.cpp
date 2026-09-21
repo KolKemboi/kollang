@@ -1,5 +1,5 @@
 #include "headers/AST.hpp"
-#include "headers/CodeGen.hpp"
+// #include "headers/CodeGen.hpp"
 #include "headers/Lexer.hpp"
 #include "headers/Parser.hpp"
 
@@ -43,13 +43,13 @@ int main(int argc, char *argv[]) {
   Lexer lexer = Lexer(SourceCode);
   std::vector<Token> tokens = lexer.tokenize();
 
-  // PrintTokens(tokens);
+  PrintTokens(tokens);
 
   Parser parser = Parser(tokens);
   Program prog = parser.parse();
 
-  CodeGen codegen;
-  codegen.generate(prog);
-  printf("\n\n============= LLVM IR ============= \n\n");
-  codegen.dump();
+  // CodeGen codegen;
+  // codegen.generate(prog);
+  // printf("\n\n============= LLVM IR ============= \n\n");
+  // codegen.dump();
 }
