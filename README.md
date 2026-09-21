@@ -4,6 +4,9 @@
 
 The language is designed to provide a familiar, low-level programming experience while using **LLVM** as its compiler backend. By targeting LLVM, Kollang can leverage LLVM's support for multiple architectures and benefit from its existing optimization and code-generation infrastructure.
 
+## current syntax
+![Current Syntax](https://github.com/KolKemboi/kollang/blob/6f789913790f306aebcf8df8fbd6ed1507f5ef51/images/syntax.png)
+
 The project is an exploration into compiler design, language implementation, and low-level programming.
 
 
@@ -20,6 +23,9 @@ int
 float
 bool
 string
+for loops
+if else statements
+switch case statements
 ```
 
 ## How the Compiler Works
