@@ -45,8 +45,8 @@ int main(int argc, char *argv[]) {
 
   PrintTokens(tokens);
 
-  Parser parser = Parser(tokens);
-  Program prog = parser.parse();
+  // Parser parser = Parser(tokens);
+  // Program prog = parser.parse();
 
   // CodeGen codegen;
   // codegen.generate(prog);

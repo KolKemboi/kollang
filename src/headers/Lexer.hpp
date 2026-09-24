@@ -41,12 +41,14 @@ enum class TokenType {
   GREATTHAN,
   GREATEQ,
   LESSEQ,
+  DOUBLEEQ,
   ADD,
+  DOUBLEADD,
   SUB,
+  DOUBLESUB,
   DIV,
   MUL,
   MODULO,
-
 };
 
 inline const std::unordered_map<std::string_view, TokenType> keywords = {
@@ -64,7 +66,8 @@ inline const std::unordered_map<std::string_view, TokenType> keywords = {
     {">=", TokenType::GREATEQ},    {"+", TokenType::ADD},
     {"-", TokenType::SUB},         {"/", TokenType::DIV},
     {"*", TokenType::MUL},         {"%", TokenType::MODULO},
-    {":", TokenType::COLON},
+    {":", TokenType::COLON},       {"==", TokenType::DOUBLEEQ},
+    {"++", TokenType::DOUBLEADD},  {"--", TokenType::DOUBLESUB},
 
 };
 
@@ -116,13 +119,45 @@ public:
       return Token(TokenType::RBRACE, "}", this->m_Line, this->m_Column - 1);
     }
 
+    // BINARY OPS
+    if (c == '+') {
+      this->_advance();
+      if (_peek() == '+') {
+        _advance();
+        return Token(TokenType::DOUBLEADD, "++", this->m_Line,
+                     this->m_Column - 2);
+      }
+      return Token(TokenType::ADD, "+", this->m_Line, this->m_Column - 1);
+    }
+    if (c == '-') {
+      this->_advance();
+      if (_peek() == '-') {
+        _advance();
+        return Token(TokenType::DOUBLESUB, "--", this->m_Line,
+                     this->m_Column - 2);
+      }
+      return Token(TokenType::SUB, "-", this->m_Line, this->m_Column - 1);
+    }
+    if (c == '*') {
+      this->_advance();
+      return Token(TokenType::MUL, "*", this->m_Line, this->m_Column - 1);
+    }
+    if (c == '/') {
+      this->_advance();
+      return Token(TokenType::DIV, "/", this->m_Line, this->m_Column - 1);
+    }
+    if (c == '%') {
+      this->_advance();
+      return Token(TokenType::MODULO, "%", this->m_Line, this->m_Column - 1);
+    }
+
     // comparators
     if (c == '<') {
       this->_advance();
       // if not = ret LESSEQ
       if (_peek() == '=') {
-        return Token(TokenType::LESSEQ, ">=", this->m_Line, this->m_Column - 1);
         _advance();
+        return Token(TokenType::LESSEQ, ">=", this->m_Line, this->m_Column - 2);
       }
       return Token(TokenType::LESSTHAN, "<", this->m_Line, this->m_Column - 1);
     }
@@ -130,14 +165,19 @@ public:
       this->_advance();
       // if not = ret GEATEQ
       if (_peek() == '=') {
-        return Token(TokenType::GREATEQ, ">=", this->m_Line,
-                     this->m_Column - 1);
         _advance();
+        return Token(TokenType::GREATEQ, ">=", this->m_Line,
+                     this->m_Column - 2);
       }
       return Token(TokenType::GREATTHAN, ">", this->m_Line, this->m_Column - 1);
     }
     if (c == '=') {
       this->_advance();
+      if (_peek() == '=') {
+        _advance();
+        return Token(TokenType::DOUBLEEQ, "==", this->m_Line,
+                     this->m_Column - 2);
+      }
       return Token(TokenType::EQUAL, "=", this->m_Line, this->m_Column - 1);
     }
 
@@ -287,12 +327,20 @@ inline void PrintTokens(std::vector<Token> &tokens) {
       out = "BINARY OP ADD" + out;
       printf("%s\n", out.c_str());
     }
+    if (token.s_Type == TokenType::DOUBLEADD) {
+      out = "BINARY OP DOUBLE ADD" + out;
+      printf("%s\n", out.c_str());
+    }
     if (token.s_Type == TokenType::MUL) {
       out = "BINARY OP MUL" + out;
       printf("%s\n", out.c_str());
     }
     if (token.s_Type == TokenType::SUB) {
       out = "BINARY OP SUB" + out;
+      printf("%s\n", out.c_str());
+    }
+    if (token.s_Type == TokenType::DOUBLESUB) {
+      out = "BINARY OP DOUBLE SUB" + out;
       printf("%s\n", out.c_str());
     }
     if (token.s_Type == TokenType::DIV) {
@@ -342,7 +390,11 @@ inline void PrintTokens(std::vector<Token> &tokens) {
       out = "EQUAL " + out;
       printf("%s\n", out.c_str());
     }
-    // compares < > <= >=
+    // compares < > <= >= ==
+    if (token.s_Type == TokenType::DOUBLEEQ) {
+      out = "DOUBLE EQUAL" + out;
+      printf("%s\n", out.c_str());
+    }
     if (token.s_Type == TokenType::LESSEQ) {
       out = "LESS EQUAL" + out;
       printf("%s\n", out.c_str());

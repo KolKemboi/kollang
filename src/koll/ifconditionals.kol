@@ -1,5 +1,11 @@
 int main(){
-	bul condition = true;
+	bul c + true;
+	bul c - true;
+	bul c * true;
+	bul c / true;
+	bul c % true;
+	bul c ++ true;
+	bul c -- true;
 	if (condition){
 
 	} else {

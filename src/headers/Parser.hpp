@@ -29,6 +29,16 @@ private:
     return _advance();
   }
 
+  // _parseBLOCK
+  // expect IF
+  // expect LPAREN
+  // parse inside the paren
+  // expect RPAREN
+  // expect LBRACE
+  // parse inside the brace
+  // expect RBRACE
+  //
+
   Program _parseProgram() {
     expect(TokenType::INT_T);
     expect(TokenType::MAIN);
@@ -54,6 +64,10 @@ private:
     if (_check(TokenType::INT_T) || _check(TokenType::BOOL) ||
         _check(TokenType::FLOAT_T) || _check(TokenType::STR_T)) {
       return _parseVariableDeclaration();
+    }
+
+    if (_check(TokenType::IF)) {
+      // return do the if ;
     }
 
     throw std::runtime_error("Expected statement at line" +

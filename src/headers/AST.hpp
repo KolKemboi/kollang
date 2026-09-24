@@ -40,11 +40,60 @@ struct ReturnStatement {
   Expression s_Expression;
 };
 
-struct ConditionalStatement {};
-
-struct ForLoop {};
+struct Conditional {
+  // name and a name
+  // value and a value
+  // name and a value
+  // Tokentype::EQ
+  TokenType s_Comparator;
+  // name of an existing variable
+  // or
+  // an expression
+  std::variant<std::string, Expression> s_Value_1;
+  std::variant<std::string, Expression> s_Value_2;
+};
 
 using Statement = std::variant<VariableDeclaration, ReturnStatement>;
+
+struct IfBlock {
+  // IF LPAREN CONDITION RPAREN LBRACE RBRACE
+  std::variant<BooleanLiteral, Conditional> s_Conditional;
+  std::vector<Statement> s_Statements;
+};
+
+using ForExpression = std::variant<IntegerLiteral, FloatLiteral>;
+
+struct ForInitialCondition {
+  TokenType s_Type;
+  std::string s_Name;
+  ForExpression s_Initializer;
+};
+
+struct ForBoundaryCondition {
+  std::string s_Name;
+  TokenType s_Comparator;
+  std::variant<std::string, ForExpression> s_Comparatee;
+
+  ForBoundaryCondition(ForInitialCondition initCond)
+      : s_Name(initCond.s_Name) {};
+};
+
+struct ForIncrement {
+  std::string s_Name;
+  TokenType s_BinaryOp;
+  ForIncrement(ForInitialCondition initCond) : s_Name(initCond.s_Name) {}
+};
+
+struct ForLoop {
+  // initial condtion std::var of float or int
+  // boundary condition => conditional
+  // increament/decrement operation
+  // statements
+  ForInitialCondition s_InitialCondition;
+  ForBoundaryCondition s_BoundaryCondition;
+  std::variant<ForIncrement> s_Increment;
+  std::vector<Statement> s_Statements;
+};
 
 // Program
 
